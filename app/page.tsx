@@ -1,5 +1,3 @@
-import "../public/styles/main.scss";
-
 import Footer from "./footer";
 import Header from "./header";
 import Products from "./products/products";
