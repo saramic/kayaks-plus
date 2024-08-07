@@ -1,4 +1,4 @@
-import "bulma/css/bulma.min.css";
+import "../public/styles/main.scss";
 
 import Footer from "./footer";
 import Header from "./header";
