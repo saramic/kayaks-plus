@@ -1,7 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
+  const handleBurgerClick = (event) => {
+    event.target.classList.toggle("is-active");
+    document
+      .getElementById(event.target.dataset.target)
+      .classList.toggle("is-active");
+  };
+
   return (
     <header className="has-text-centered pb-4">
       <section className="hero is-small is-primary">
@@ -20,6 +29,53 @@ export default function Header() {
           </Link>
         </div>
       </section>
+
+      <nav className="navbar">
+        <div className="navbar-brand">
+          <Link href="/" className="navbar-item">
+            <span className="icon">
+              <i className="fas fa-home"></i>
+            </span>
+          </Link>
+          <div
+            className="navbar-burger burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navMenu"
+            onClick={handleBurgerClick}
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </div>
+        </div>
+        <div className="navbar-menu" id="navMenu">
+          <div className="navbar-start">
+            <p className="level-item has-text-centered"></p>
+            <p className="level-item has-text-centered">
+              <Link href="/" className="navbar-item">
+                paddles
+              </Link>
+            </p>
+            <p className="level-item has-text-centered">
+              <Link href="/" className="navbar-item">
+                boats
+              </Link>
+            </p>
+          </div>
+          <div className="navbar-end">
+            <p className="level-item has-text-centered">
+              <Link href="/" className="navbar-item">
+                <span className="icon">
+                  <i className="fas fa-cart-shopping"></i>
+                </span>
+                cart
+              </Link>
+            </p>
+          </div>
+        </div>
+      </nav>
     </header>
   );
 }
