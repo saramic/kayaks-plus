@@ -36,3 +36,8 @@ just dev
   - vampire logo
 - [ ] align with other falcon paddle distributors
   - https://jcpolo.co.nz/collections/paddles/products/falcon-polo-paddle
+- [ ] review size of generated assets
+- [ ] nextjs and web crawling
+- [ ] analytics
+- [ ] email form
+- [ ] basic cart
