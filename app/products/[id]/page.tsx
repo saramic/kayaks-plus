@@ -9,7 +9,6 @@ export default function Product({ params: { id } }) {
     products.getProducts().find((product) => product.id === id) || {};
   return imgSrc ? (
     <>
-      <Header />
       <div className="card">
         <div className="card-image">
           <figure className="image is-4by3">

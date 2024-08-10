@@ -25,10 +25,10 @@ _default:
 
     @just --list --unsorted
 
-# run dev mode 
+# run dev mode
 @dev:
     npm install
-    npm run dev
+    PORT=3030 npm run dev
 
 # full build
 build:

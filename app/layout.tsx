@@ -1,4 +1,6 @@
 import "../public/styles/main.scss";
+import Footer from "./footer";
+import Header from "./header";
 
 export default function RootLayout({
   children,
@@ -7,7 +9,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

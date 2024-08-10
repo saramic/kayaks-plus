@@ -20,7 +20,7 @@ just dev
 
 ## TODO
 
-- [ ] MVP of an email powed store
+- [ ] MVP of an email powered store
 - [ ] align with historic store
   - vampire kayaks
     - https://web.archive.org/web/20131012003901/http://www.kayaksplus.com/vampire.htm
@@ -36,8 +36,11 @@ just dev
   - vampire logo
 - [ ] align with other falcon paddle distributors
   - https://jcpolo.co.nz/collections/paddles/products/falcon-polo-paddle
+  - https://falconpaddles.eu/falcon-one/
 - [ ] review size of generated assets
 - [ ] nextjs and web crawling
 - [ ] analytics
 - [ ] email form
 - [ ] basic cart
+- [ ] tests
+- [ ] linting

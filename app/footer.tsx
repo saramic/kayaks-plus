@@ -22,7 +22,7 @@ export default function Footer() {
           </Link>
         </p>
         <p className="level-item has-text-centered has-text-weight-light">
-          <Link href="/" className="navbar-item">
+          <Link href="/about" className="navbar-item">
             about
           </Link>
         </p>
