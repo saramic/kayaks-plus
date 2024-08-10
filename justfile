@@ -30,6 +30,14 @@ _default:
     npm install
     PORT=3030 npm run dev
 
+# run cypress E2E specs
+cypress-e2e:
+    npm run cypress:open -- --browser chrome --e2e
+
+# run cypress build
+cypress-run:
+    npm run cypress:run
+
 # full build
 build:
     npm install

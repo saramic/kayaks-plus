@@ -43,4 +43,9 @@ just dev
 - [ ] email form
 - [ ] basic cart
 - [ ] tests
-- [X] linting
+  - [x] cypress E2E
+  - [ ] cypress running on github - follow
+        https://docs.cypress.io/guides/continuous-integration/github-actions
+  - [ ] vitest or similar unit testing
+  - [ ] run vitest on github actions
+- [x] linting
