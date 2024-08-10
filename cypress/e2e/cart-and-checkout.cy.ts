@@ -1,0 +1,59 @@
+describe('cart and checkout', () => {
+  Cypress.Keyboard.defaults({
+    keystrokeDelay: 0,
+  })
+  it('adds 3 items to cart and checks out', () => {
+    cy.getAllLocalStorage['lastSearches']
+    cy.log("When I visit the site")
+    cy.visit('http://localhost:3030')
+    cy.get('h1').should('have.text', 'kayaksplus.store')
+
+    cy.log("And I add to cart first best 3 item")
+    cy.get('#product-1 button').contains('add to cart').click()
+      .should('have.class', 'is-loading')
+    cy.get('#product-1 button').contains('add to cart').should('not.have.class', 'is-loading')
+
+    cy.get('#product-2 button').contains('add to cart').click()
+      .should('have.class', 'is-loading')
+    cy.get('#product-2 button').contains('add to cart').should('not.have.class', 'is-loading')
+
+    cy.get('#product-3 button').contains('add to cart').click()
+      .should('have.class', 'is-loading')
+    cy.get('#product-3 button').contains('add to cart').should('not.have.class', 'is-loading')
+
+    cy.log("And the cart is opened")
+    cy.get('header .burger').click({ force: true })
+    cy.get('header .navbar-end a').contains('cart').click()
+
+    cy.log("Then the cart shows the item")
+    cy.get("table tbody tr").should('have.length', 3)
+    cy.get("table tbody tr:nth-child(1) td:nth-child(1)").should('have.text', 'falcon paddle 1')
+    cy.get("table tbody tr:nth-child(1) td:nth-child(2)").should('have.text', '1')
+    cy.get("table tbody tr:nth-child(1) td:nth-child(3)").should('have.text', '$100.10')
+
+    cy.log("And the total is correct")
+    cy.get("table tfoot tr").should('have.length', 1)
+    cy.get("table tfoot tr:nth-child(1) td:nth-child(1)").should('have.text', 'Total')
+    cy.get("table tfoot tr:nth-child(1) td:nth-child(3)").should('have.text', '$600.60')
+
+    // TODO: add delete product
+    // TODO: add same of 2 products
+
+    cy.log("When they submit they form")
+    cy.get('#name').type('Kathrine Kayaker')
+    cy.get('#email').type('kath@kayak.org')
+    // https://www.acma.gov.au/phone-numbers-use-tv-shows-films-and-creative-works
+    cy.get('#phone').type('0491570006')
+    cy.get('#address-line-1').type('The Kayak District')
+    cy.get('#address-line-2').type('123 Paddle Street')
+    cy.get('#suburb').type('Kayakville')
+    cy.get('#state').type('South Australia')
+    cy.get('#payment-preference').select('Direct Transfer')
+    cy.get('#more-information').type('I would like to purchase 2 kayaks')
+    cy.get('#submitForm').contains('Send purchase enquiry').click()
+
+    cy.log("Then the submit button is loading")
+    cy.get('#submitForm').get('.is-loading')
+    cy.get('#submitForm').should('not.have.class', 'is-loading')
+  })
+})

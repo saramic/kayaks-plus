@@ -1,11 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cartService } from "../cartService";
 
 export default function Product({
   product: { id, title, imgSrc, description, price },
 }) {
+  const cart = new cartService();
+  const addToCart = (event) => {
+    event.target.classList.toggle("is-loading");
+    setTimeout(() => {
+      cart.addItem({ productId: id, name: title, price });
+      event.target.classList.toggle("is-loading");
+    }, 300);
+  };
   return (
-    <div className="card">
+    <div id={`product-${id}`} className="card">
       <div className="card-image">
         <Link href={`/products/${id}`}>
           <figure className="image is-4by3">
@@ -28,6 +37,9 @@ export default function Product({
               currency: "AUD",
             }).format(price)}
           </p>
+          <button className="button is-link" onClick={addToCart}>
+            add to cart
+          </button>
         </div>
       </div>
     </div>

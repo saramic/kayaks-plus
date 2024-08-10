@@ -20,6 +20,16 @@ just dev
 
 ## TODO
 
+### Bugs
+
+- [ ] navbar needs to close after page change in mobile view
+- [ ] sort out window.localStorage in tests, is there a react cache better way
+      or some kind of context?
+- [ ] show no table if there are no cart itmes
+- [ ] cart should be full width
+
+### Work
+
 - [ ] MVP of an email powered store
 - [ ] align with historic store
   - vampire kayaks

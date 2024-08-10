@@ -1,12 +1,17 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, beforeEach, expect, test, vi } from "vitest";
 import { cartService } from "../app/cartService";
 
 vi.mock("uuid", () => ({
   v4: vi.fn(() => "11111111-0000-4000-0000-000000000000"),
 }));
+
+beforeEach(() => {
+  window.localStorage.clear();
+});
+
 describe("cartService", () => {
   test("has no items by default", () => {
-    const cart = new cartService();
+    const cart = new cartService(window.localStorage);
     expect(cart.getItems().length).toBe(0);
   });
 
@@ -23,5 +28,12 @@ describe("cartService", () => {
         cost: 101,
       },
     ]);
+  });
+
+  test("A cart with items will have the correct total", () => {
+    const cart = new cartService();
+    cart.addItem({ productId: "1", name: "item 1", price: 101 });
+    cart.addItem({ productId: "2", name: "item 2", price: 220 });
+    expect(cart.getTotal()).toEqual(321);
   });
 });

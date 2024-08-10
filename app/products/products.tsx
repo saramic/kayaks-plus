@@ -1,3 +1,5 @@
+"use client";
+
 import Product from "./product";
 import { productsService } from "./productsService";
 

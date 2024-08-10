@@ -1,8 +1,11 @@
 "use client";
 
 import { FormEvent } from "react";
+import { cartService } from "../cartService";
 
 export default function Page() {
+  const cart = new cartService();
+
   const checkout = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     document
@@ -18,6 +21,46 @@ export default function Page() {
     <section className="section">
       <div className="columns is-centered">
         <div className="column is-half">
+          <div className="content">
+            <table className="control is-exanded">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Cost</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart.getItems().map(({ cartId, name, quantity, cost }) => (
+                  <tr key={`cart-item-${cartId}`}>
+                    <td>{name}</td>
+                    <td>{quantity}</td>
+                    <td>
+                      {new Intl.NumberFormat("en-AU", {
+                        style: "currency",
+                        currency: "AUD",
+                      }).format(cost)}
+                    </td>
+                    <td></td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot className="has-text-weight-bold">
+                <tr>
+                  <td>Total</td>
+                  <td></td>
+                  <td>
+                    {new Intl.NumberFormat("en-AU", {
+                      style: "currency",
+                      currency: "AUD",
+                    }).format(cart.getTotal())}
+                  </td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
           <form onSubmit={checkout} data-target="submitForm">
             <div className="field">
               <label className="label" htmlFor="name">
