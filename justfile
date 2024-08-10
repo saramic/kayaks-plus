@@ -42,4 +42,5 @@ cypress-run:
 build:
     npm install
     npm run lint
+    npm test -- --run
     npm run build
