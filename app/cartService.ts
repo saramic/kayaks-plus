@@ -1,9 +1,11 @@
+import { v4 as uuidv4 } from 'uuid';
 type NewCartItemType = {
   productId: string;
   name: string;
   price: number;
 };
 type CartItemType = {
+  cartId: string;
   productId: string;
   name: string;
   price: number;
@@ -24,7 +26,7 @@ export class cartService {
     return this._data
   }
   addItem(item: NewCartItemType) {
-    const fullItem = { ...item, quantity: 1, cost: item.price };
+    const fullItem = { cartId: uuidv4(), ...item, quantity: 1, cost: item.price };
     this._data.push(fullItem)
   }
 }
