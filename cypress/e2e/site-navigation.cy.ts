@@ -1,4 +1,7 @@
 describe('navigation of KayaksPlus.store site', () => {
+  Cypress.Keyboard.defaults({
+    keystrokeDelay: 0,
+  })
   it('navigates header and footer links', () => {
     cy.log("When I visit the site")
     cy.visit('http://localhost:3030')
@@ -30,6 +33,15 @@ describe('navigation of KayaksPlus.store site', () => {
     cy.url().should('include', '/cart')
 
     cy.log("When they submit they form")
+    cy.get('#name').type('Kathrine Kayaker')
+    cy.get('#email').type('kath@kayak.org')
+    // https://www.acma.gov.au/phone-numbers-use-tv-shows-films-and-creative-works
+    cy.get('#phone').type('0491570006')
+    cy.get('#address-line-1').type('The Kayak District')
+    cy.get('#address-line-2').type('123 Paddle Street')
+    cy.get('#suburb').type('Kayakville')
+    cy.get('#state').type('South Australia')
+    cy.get('#payment-preference').select('Direct Transfer')
     cy.get('#more-information').type('I would like to purchase 2 kayaks')
     cy.get('#submitForm').contains('Send purchase enquiry').click()
 
