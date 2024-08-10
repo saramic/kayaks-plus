@@ -8,7 +8,7 @@ export default function Header() {
     event.target.classList.toggle("is-active");
     document
       .getElementById(event.target.dataset.target)
-      .classList.toggle("is-active");
+      ?.classList.toggle("is-active");
   };
 
   return (
@@ -66,8 +66,8 @@ export default function Header() {
           </div>
           <div className="navbar-end">
             <p className="level-item has-text-centered">
-              <Link href="/" className="navbar-item">
-                <span className="icon">
+              <Link href="/cart" className="navbar-item">
+                <span className="icon pr-3">
                   <i className="fas fa-cart-shopping"></i>
                 </span>
                 cart
