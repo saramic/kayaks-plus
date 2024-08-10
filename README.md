@@ -43,4 +43,4 @@ just dev
 - [ ] email form
 - [ ] basic cart
 - [ ] tests
-- [ ] linting
+- [X] linting

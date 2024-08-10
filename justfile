@@ -33,4 +33,5 @@ _default:
 # full build
 build:
     npm install
+    npm run lint
     npm run build
