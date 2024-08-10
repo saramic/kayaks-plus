@@ -52,10 +52,18 @@ just dev
 - [ ] analytics
 - [ ] email form
 - [ ] basic cart
+  - [x] cart total
+  - [x] cart add item
+  - [ ] cart remove
+  - [ ] cart item de-duplication
+  - [ ] deal with corrupt cart
+  - [ ] cart change quantity
+  - [ ] display items in cart
+  - [ ] display product is in cart
 - [ ] tests
   - [x] cypress E2E
   - [ ] cypress running on github - follow
         https://docs.cypress.io/guides/continuous-integration/github-actions
-  - [ ] vitest or similar unit testing
-  - [ ] run vitest on github actions
+  - [x] vitest or similar unit testing
+  - [x] run vitest on github actions
 - [x] linting
