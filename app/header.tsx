@@ -22,10 +22,10 @@ export default function Header() {
             height="100"
           />
           <Link href="/">
-            <p className="title has-text-white">
+            <h1 className="title has-text-white">
               <span className="has-text-weight-bold">kayaks</span>
               <span className="has-text-weight-light">plus.store</span>
-            </p>
+            </h1>
           </Link>
         </div>
       </section>
