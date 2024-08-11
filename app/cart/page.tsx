@@ -22,44 +22,59 @@ export default function Page() {
       <div className="columns is-centered">
         <div className="column is-half">
           <div className="content">
-            <table className="control is-exanded">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Cost</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {cart.items().map(({ cartId, name, quantity, cost }) => (
-                  <tr key={`cart-item-${cartId}`}>
-                    <td>{name}</td>
-                    <td>{quantity}</td>
+            {cart.items().length > 0 ? (
+              <table className="control is-exanded">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Cost</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cart.items().map(({ cartId, name, quantity, cost }) => (
+                    <tr key={`cart-item-${cartId}`}>
+                      <td>{name}</td>
+                      <td>{quantity}</td>
+                      <td>
+                        {new Intl.NumberFormat("en-AU", {
+                          style: "currency",
+                          currency: "AUD",
+                        }).format(cost)}
+                      </td>
+                      <td>
+                        <button
+                          className="is-danger"
+                          onClick={() => cart.removeItem(cartId)}
+                        >
+                          <span className="icon">
+                            <i className="fas fa-trash"></i>
+                          </span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot className="has-text-weight-bold">
+                  <tr>
+                    <td>Total</td>
+                    <td></td>
                     <td>
                       {new Intl.NumberFormat("en-AU", {
                         style: "currency",
                         currency: "AUD",
-                      }).format(cost)}
+                      }).format(cart.total())}
                     </td>
                     <td></td>
                   </tr>
-                ))}
-              </tbody>
-              <tfoot className="has-text-weight-bold">
-                <tr>
-                  <td>Total</td>
-                  <td></td>
-                  <td>
-                    {new Intl.NumberFormat("en-AU", {
-                      style: "currency",
-                      currency: "AUD",
-                    }).format(cart.total())}
-                  </td>
-                  <td></td>
-                </tr>
-              </tfoot>
-            </table>
+                </tfoot>
+              </table>
+            ) : (
+              <section data-testid="no-cart-message">
+                <p>No cart items, general enquiry only</p>
+              </section>
+            )}
           </div>
           <form onSubmit={checkout} data-target="submitForm">
             <div className="field">

@@ -1,8 +1,12 @@
 import { describe, beforeEach, expect, test, vi } from "vitest";
 import { cartService } from "../app/cartService";
 
+let count = 0;
 vi.mock("uuid", () => ({
-  v4: vi.fn(() => "11111111-0000-4000-0000-000000000000"),
+  v4: vi.fn(() => {
+    const lastPart = ("000000000000" + count++).slice(-12);
+    return `11111111-0000-4000-0000-${lastPart}`;
+  }),
 }));
 
 beforeEach(() => {
@@ -42,5 +46,15 @@ describe("cartService", () => {
     cart.addItem({ productId: "1", name: "item 1", price: 101 });
     cart.addItem({ productId: "2", name: "item 2", price: 220 });
     expect(cart.count()).toEqual(2);
+  });
+
+  test("A cart with items can have items removed", () => {
+    const cart = new cartService();
+    cart.addItem({ productId: "1", name: "item 1", price: 101 });
+    cart.addItem({ productId: "2", name: "item 2", price: 220 });
+    expect(cart.count()).toEqual(2);
+    const items = cart.items();
+    expect(cart.removeItem(items[0].cartId)).toEqual(items[0]);
+    expect(cart.count()).toEqual(1);
   });
 });

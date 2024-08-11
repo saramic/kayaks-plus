@@ -12,8 +12,11 @@ describe('cart and checkout', () => {
     cy.get('header .burger').click({ force: true })
     cy.get('header .navbar-end a').contains('cart').click()
 
-    cy.log("Then the cart is empty")
-    cy.get("table tbody tr").should('have.length', 0)
+    cy.log("Then the cart is not visible")
+    cy.get("table").should('not.exist')
+
+    cy.log("And user is informed there is not cart so it is a pure enquiry");
+    cy.get("[data-testid=no-cart-message]").should('contain.text', 'No cart items, general enquiry only');
 
     cy.log("When we navigate home")
     cy.get('header .navbar-brand a').click()
@@ -44,7 +47,6 @@ describe('cart and checkout', () => {
     // TODO: header should auto close when we change pages
     cy.get('header .burger').click({ force: true })
 
-
     cy.log("Then the cart shows the item")
     cy.get("table tbody tr").should('have.length', 3)
     cy.get("table tbody tr:nth-child(1) td:nth-child(1)").should('have.text', 'falcon paddle 1')
@@ -56,7 +58,15 @@ describe('cart and checkout', () => {
     cy.get("table tfoot tr:nth-child(1) td:nth-child(1)").should('have.text', 'Total')
     cy.get("table tfoot tr:nth-child(1) td:nth-child(3)").should('have.text', '$600.60')
 
-    // TODO: add delete product
+    cy.log("When the user deletes the second item")
+    cy.get("table tbody tr:nth-child(1) td:nth-child(3)").click()
+
+    cy.log("Then the cart shows item 2 is no there")
+    // TODO: updates if cart changes with Context
+    // cy.get("table tbody tr").should('have.length', 2)
+    // cy.get("[data-testid=cart-count]").should('have.text', '2')
+    // cy.get("table tfoot tr:nth-child(1) td:nth-child(3)").should('have.text', '$400.40')
+
     // TODO: add same of 2 products
 
     cy.log("When they submit they form")

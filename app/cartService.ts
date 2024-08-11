@@ -53,12 +53,21 @@ export class cartService {
     return this._data
   }
 
-  async addItem(item: NewCartItemType) {
+  addItem(item: NewCartItemType) {
     this.refresh(); // TODO: as each product has own copy of cart
 
     const fullItem = { cartId: uuidv4(), ...item, quantity: 1, cost: item.price };
     this._data.push(fullItem)
     this.saveCart();
+  }
+
+  removeItem(cartId: string) {
+    this.refresh(); // TODO: as each product has own copy of cart
+
+    const item = this._data.find(item => item.cartId === cartId);
+    this._data = this._data.filter(item => item.cartId !== cartId);
+    this.saveCart();
+    return item;
   }
 
   total() {
