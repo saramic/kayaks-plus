@@ -8,6 +8,20 @@ describe('cart and checkout', () => {
     cy.visit('http://localhost:3030')
     cy.get('h1').should('have.text', 'kayaksplus.store')
 
+    cy.log("And the cart is opened")
+    cy.get('header .burger').click({ force: true })
+    cy.get('header .navbar-end a').contains('cart').click()
+
+    cy.log("Then the cart is empty")
+    cy.get("table tbody tr").should('have.length', 0)
+
+    cy.log("When we navigate home")
+    cy.get('header .navbar-brand a').click()
+
+    // TODO: header should auto close when we change pages
+    cy.log("And we close the header")
+    cy.get('header .burger').click({ force: true })
+
     cy.log("And I add to cart first best 3 item")
     cy.get('#product-1 button').contains('add to cart').click()
       .should('have.class', 'is-loading')
@@ -24,6 +38,12 @@ describe('cart and checkout', () => {
     cy.log("And the cart is opened")
     cy.get('header .burger').click({ force: true })
     cy.get('header .navbar-end a').contains('cart').click()
+    // TODO: hopefully this will be sorted once the cart is inected as React Context
+    // cy.log("Then the cart count is correct")
+    // cy.get("[data-testid=cart-count]").should('have.text', '3')
+    // TODO: header should auto close when we change pages
+    cy.get('header .burger').click({ force: true })
+
 
     cy.log("Then the cart shows the item")
     cy.get("table tbody tr").should('have.length', 3)

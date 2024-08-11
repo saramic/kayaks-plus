@@ -49,7 +49,7 @@ export class cartService {
     }
   }
 
-  getItems() {
+  items() {
     return this._data
   }
 
@@ -61,11 +61,17 @@ export class cartService {
     this.saveCart();
   }
 
-  getTotal() {
+  total() {
     this.refresh(); // TODO: as each product has own copy of cart
 
     // TODO: _data? for static site generation where thiere
     return this._data.reduce((acc, { cost }) => acc + cost, 0)
+  }
+
+  count() {
+    this.refresh(); // TODO: as each product has own copy of cart
+
+    return this._data.length;
   }
 
   private saveCart() {

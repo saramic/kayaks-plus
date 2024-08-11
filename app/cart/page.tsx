@@ -32,7 +32,7 @@ export default function Page() {
                 </tr>
               </thead>
               <tbody>
-                {cart.getItems().map(({ cartId, name, quantity, cost }) => (
+                {cart.items().map(({ cartId, name, quantity, cost }) => (
                   <tr key={`cart-item-${cartId}`}>
                     <td>{name}</td>
                     <td>{quantity}</td>
@@ -54,7 +54,7 @@ export default function Page() {
                     {new Intl.NumberFormat("en-AU", {
                       style: "currency",
                       currency: "AUD",
-                    }).format(cart.getTotal())}
+                    }).format(cart.total())}
                   </td>
                   <td></td>
                 </tr>

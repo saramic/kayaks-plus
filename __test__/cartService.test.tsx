@@ -12,13 +12,13 @@ beforeEach(() => {
 describe("cartService", () => {
   test("has no items by default", () => {
     const cart = new cartService(window.localStorage);
-    expect(cart.getItems().length).toBe(0);
+    expect(cart.items().length).toBe(0);
   });
 
   test("When you add an item, it is in the cart", () => {
     const cart = new cartService();
     cart.addItem({ productId: "1", name: "item 1", price: 101 });
-    expect(cart.getItems()).toEqual([
+    expect(cart.items()).toEqual([
       {
         cartId: "11111111-0000-4000-0000-000000000000",
         productId: "1",
@@ -34,6 +34,13 @@ describe("cartService", () => {
     const cart = new cartService();
     cart.addItem({ productId: "1", name: "item 1", price: 101 });
     cart.addItem({ productId: "2", name: "item 2", price: 220 });
-    expect(cart.getTotal()).toEqual(321);
+    expect(cart.total()).toEqual(321);
+  });
+
+  test("A cart with items will have the correct count", () => {
+    const cart = new cartService();
+    cart.addItem({ productId: "1", name: "item 1", price: 101 });
+    cart.addItem({ productId: "2", name: "item 2", price: 220 });
+    expect(cart.count()).toEqual(2);
   });
 });

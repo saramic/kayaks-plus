@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { cartService } from "./cartService";
 
 export default function Header() {
+  const cart = new cartService();
   const handleBurgerClick = (event) => {
     event.target.classList.toggle("is-active");
     document
@@ -71,6 +73,14 @@ export default function Header() {
                   <i className="fas fa-cart-shopping"></i>
                 </span>
                 cart
+                {cart.items().length > 0 && (
+                  <span
+                    className="tag is-danger is-rounded"
+                    data-testid="cart-count"
+                  >
+                    {cart.count()}
+                  </span>
+                )}
               </Link>
             </p>
           </div>
