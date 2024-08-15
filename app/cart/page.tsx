@@ -1,11 +1,65 @@
 "use client";
 
-import { FormEvent } from "react";
-import { cartService } from "../cartService";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { CartContext, CartDispatchContext } from "../CartContext";
 
 export default function Page() {
-  const cart = new cartService();
+  const [cartItems, setCartItems] = useState([]);
+  const cart = useContext(CartContext);
 
+  useEffect(() => {
+    setCartItems(cart.sort((a, b) => a.name.localeCompare(b.name)));
+  }, [cart]);
+  const dispatch = useContext(CartDispatchContext);
+  const deleteFromCart = (cartId, event) => {
+    event.target.classList.toggle("is-loading");
+    setTimeout(() => {
+      dispatch({
+        type: "deleted",
+        cartId: cartId,
+      });
+      setCartItems(cart);
+    }, 100);
+  };
+
+  const incrementQuantity = (cartId, event) => {
+    event.target.classList.toggle("is-loading");
+    setTimeout(() => {
+      dispatch({
+        type: "incremented",
+        cartId: cartId,
+      });
+      setCartItems(cart);
+      event.target.classList.toggle("is-loading");
+    }, 100);
+  };
+
+  const decrementQauntity = (cartId, event) => {
+    event.target.classList.toggle("is-loading");
+    setTimeout(() => {
+      dispatch({
+        type: "decremented",
+        cartId: cartId,
+      });
+      setCartItems(cart);
+      event.target.classList.toggle("is-loading");
+    }, 100);
+  };
+
+  const cartTotal = (cart) => {
+    return cart.reduce((acc, { cost }) => acc + cost, 0);
+  };
+
+  const resetCart = (event) => {
+    event.target.classList.toggle("is-loading");
+    setTimeout(() => {
+      dispatch({
+        type: "cartReset",
+      });
+      setCartItems(cart);
+      event.target.classList.toggle("is-loading");
+    }, 100);
+  };
   const checkout = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     document
@@ -22,8 +76,8 @@ export default function Page() {
       <div className="columns is-centered">
         <div className="column is-half">
           <div className="content">
-            {cart.items().length > 0 ? (
-              <table className="control is-exanded">
+            {cartItems.length > 0 ? (
+              <table className="table is-fullwidth">
                 <thead>
                   <tr>
                     <th>Item</th>
@@ -33,10 +87,35 @@ export default function Page() {
                   </tr>
                 </thead>
                 <tbody>
-                  {cart.items().map(({ cartId, name, quantity, cost }) => (
+                  {cartItems.map(({ cartId, name, quantity, cost }) => (
                     <tr key={`cart-item-${cartId}`}>
                       <td>{name}</td>
-                      <td>{quantity}</td>
+                      <td>
+                        {quantity}
+
+                        <span className="fa fa-stack">
+                          <button
+                            data-testid="quantity-increment"
+                            onClick={(event) =>
+                              incrementQuantity(cartId, event)
+                            }
+                          >
+                            <span className="icon">
+                              <i className="fas fa-caret-up"></i>
+                            </span>
+                          </button>
+                          <button
+                            data-testid="quantity-decrement"
+                            onClick={(event) =>
+                              decrementQauntity(cartId, event)
+                            }
+                          >
+                            <span className="icon">
+                              <i className="fas fa-caret-down"></i>
+                            </span>
+                          </button>
+                        </span>
+                      </td>
                       <td>
                         {new Intl.NumberFormat("en-AU", {
                           style: "currency",
@@ -46,7 +125,7 @@ export default function Page() {
                       <td>
                         <button
                           className="is-danger"
-                          onClick={() => cart.removeItem(cartId)}
+                          onClick={(event) => deleteFromCart(cartId, event)}
                         >
                           <span className="icon">
                             <i className="fas fa-trash"></i>
@@ -64,7 +143,7 @@ export default function Page() {
                       {new Intl.NumberFormat("en-AU", {
                         style: "currency",
                         currency: "AUD",
-                      }).format(cart.total())}
+                      }).format(cartTotal(cart))}
                     </td>
                     <td></td>
                   </tr>
@@ -74,6 +153,17 @@ export default function Page() {
               <section data-testid="no-cart-message">
                 <p>No cart items, general enquiry only</p>
               </section>
+            )}
+            {cartItems?.length !== 0 && (
+              <button
+                className="button is-danger is-flex ml-auto"
+                onClick={(event) => resetCart(event)}
+              >
+                reset cart
+                <span className="icon ml-3">
+                  <i className="fas fa-power-off"></i>
+                </span>
+              </button>
             )}
           </div>
           <form onSubmit={checkout} data-target="submitForm">
@@ -120,8 +210,8 @@ export default function Page() {
               </div>
             </div>
 
-            <hr />
-            <h2 className="has-text-weight-bold pb-4">Shipping Address</h2>
+            <hr className="mt-6" />
+            <h2 className="has-text-weight-bold pb-5">Shipping Address</h2>
             <div className="field">
               <label className="label" htmlFor="address-line-1">
                 Address line 1

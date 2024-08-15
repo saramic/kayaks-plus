@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 type NewCartItemType = {
   productId: string;
   name: string;
@@ -13,16 +13,17 @@ type CartItemType = {
   cost: number;
 };
 
-export class cartService {
+export class CartService {
   _data: CartItemType[];
   _storage: Storage;
 
   constructor(storage: Storage = undefined) {
-    this._data = [] // set for statis site generation
+    this._data = []; // set for statis site generation
     try {
-      this._storage = storage || typeof window !== "undefined" && window.localStorage;
+      this._storage =
+        storage || (typeof window !== "undefined" && window.localStorage);
     } catch (e) {
-      console.error("no storage available", e)
+      console.error("no storage available", e);
     }
 
     this.refresh();
@@ -33,57 +34,32 @@ export class cartService {
     //       cypress
     if (!this._storage) return;
 
-    const cartData = this._storage.getItem('cart');
-
+    const cartData = this._storage.getItem("cart");
 
     if (cartData) {
       // TODO: deal with invalid JSON inside cart
       // try {
       this._data = JSON.parse(cartData);
-      // } catch (e) { // handle invalid JSON
-      //   this._data = []
+      // } catch (e) {
+      //   // handle invalid JSON
+      //   this._data = [];
       //   this.saveCart();
       // }
     } else {
-      this._data = []
+      this._data = [];
     }
   }
 
   items() {
-    return this._data
+    return this._data;
   }
 
-  addItem(item: NewCartItemType) {
-    this.refresh(); // TODO: as each product has own copy of cart
-
-    const fullItem = { cartId: uuidv4(), ...item, quantity: 1, cost: item.price };
-    this._data.push(fullItem)
+  updateCart(newCart: CartItemType[]) {
+    this._data = newCart;
     this.saveCart();
-  }
-
-  removeItem(cartId: string) {
-    this.refresh(); // TODO: as each product has own copy of cart
-
-    const item = this._data.find(item => item.cartId === cartId);
-    this._data = this._data.filter(item => item.cartId !== cartId);
-    this.saveCart();
-    return item;
-  }
-
-  total() {
-    this.refresh(); // TODO: as each product has own copy of cart
-
-    // TODO: _data? for static site generation where thiere
-    return this._data.reduce((acc, { cost }) => acc + cost, 0)
-  }
-
-  count() {
-    this.refresh(); // TODO: as each product has own copy of cart
-
-    return this._data.length;
   }
 
   private saveCart() {
-    this._storage.setItem('cart', JSON.stringify(this._data));
+    this._storage.setItem("cart", JSON.stringify(this._data));
   }
 }

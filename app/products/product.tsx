@@ -1,15 +1,25 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { cartService } from "../cartService";
+import { useContext } from "react";
+import { CartDispatchContext } from "../CartContext";
 
 export default function Product({
   product: { id, title, imgSrc, description, price },
 }) {
-  const cart = new cartService();
+  const dispatch = useContext(CartDispatchContext);
   const addToCart = (event) => {
+    console.log("adding to cart");
     event.target.classList.toggle("is-loading");
+    dispatch({
+      type: "added",
+      productId: id,
+      name: title,
+      price,
+    });
+    console.log("adding to cart finished");
     setTimeout(() => {
-      cart.addItem({ productId: id, name: title, price });
       event.target.classList.toggle("is-loading");
     }, 300);
   };

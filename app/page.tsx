@@ -1,5 +1,3 @@
-import Footer from "./footer";
-import Header from "./header";
 import Products from "./products/products";
 
 export default function Page() {

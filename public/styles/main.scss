@@ -22,3 +22,25 @@ $kp-yellow: #ffcc00;
 
 @import "bulma/bulma.scss";
 @import "@fortawesome/fontawesome-free/css/all.css";
+
+@import "bulma/sass/utilities/mixins";
+
+i {
+  &.is-loading {
+    @include loader;
+  }
+}
+
+.fa-stack {
+  text-align: center;
+}
+
+.fa-stack .fa-caret-down {
+  position: absolute;
+  bottom: 0;
+}
+
+.fa-stack .fa-caret-up {
+  position: absolute;
+  top: 0;
+}

@@ -1,4 +1,7 @@
+"use client";
+
 import "../public/styles/main.scss";
+import { CartProvider } from "./CartContext";
 import Footer from "./footer";
 import Header from "./header";
 
@@ -10,9 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <CartProvider>
+          <Header />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
